@@ -22,43 +22,43 @@ struct RecipeFeaturedView: View {
                 .padding(.bottom, -30)
                 .font(.largeTitle)
             
-                
+            
             
             GeometryReader { geo in
-            TabView {
-                ForEach (0..<model.recipes.count) { index in
-                    
-                    if model.recipes[index].featured == true {
+                TabView {
+                    ForEach (0..<model.recipes.count) { index in
                         
-                        //Recipe Card
-                        ZStack {
-                            Rectangle()
-                                .foregroundColor(.white)
+                        if model.recipes[index].featured == true {
+                            
+                            //Recipe Card
+                            ZStack {
+                                Rectangle()
+                                    .foregroundColor(.white)
                                 
-                            VStack(spacing: 0.0){
-                                Image(model.recipes[index].image)
-                                    .resizable()
-                                    .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-                                    .clipped()
-                                
-                                Text(model.recipes[index].name)
-                                    .font(.headline)
-                                    .padding(10)
+                                VStack(spacing: 0.0){
+                                    Image(model.recipes[index].image)
+                                        .resizable()
+                                        .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                                        .clipped()
+                                    
+                                    Text(model.recipes[index].name)
+                                        .font(.headline)
+                                        .padding(10)
+                                }
                             }
+                            .frame(width: (geo.size.width - 40), height: (geo.size.height - 100), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            .cornerRadius(20)
+                            .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.2), radius: 10, x: -5, y: 10)
+                            
+                            
                         }
-                        .frame(width: (geo.size.width - 40), height: (geo.size.height - 100), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        .cornerRadius(20)
-                        .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.2), radius: 10, x: -5, y: 10)
-                    
+                        
+                        
                         
                     }
-                    
-                    
-                    
-                }
-            } .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-            
+                } .tabViewStyle(PageTabViewStyle(indexDisplayMode: .automatic))
+                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+                
             }
             
             
@@ -71,6 +71,7 @@ struct RecipeFeaturedView: View {
                     .font(.headline)
                 Text("Healthy, Hearty")
             } .padding(.leading)
+            .padding(.bottom)
         }
     }
 }
