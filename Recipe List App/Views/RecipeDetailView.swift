@@ -30,8 +30,9 @@ struct RecipeDetailView: View {
                     VStack(alignment: .leading) {
                         Text(recipe
                                 .name)
-                            .font(.title)
+                            .font(.largeTitle)
                             .bold()
+                            .padding(.top, 20)
                         
                         Text("Choose your serving size")
                             .font(.caption)

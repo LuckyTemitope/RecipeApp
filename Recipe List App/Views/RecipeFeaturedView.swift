@@ -10,6 +10,7 @@ import SwiftUI
 struct RecipeFeaturedView: View {
     
     @EnvironmentObject var model:RecipeModel
+    @State var isDetailViewShowing = false
     
     var body: some View {
         
@@ -30,25 +31,43 @@ struct RecipeFeaturedView: View {
                         
                         if model.recipes[index].featured == true {
                             
-                            //Recipe Card
-                            ZStack {
-                                Rectangle()
-                                    .foregroundColor(.white)
+                            
+                            // Recipe Card Button
+                            Button(action: {
                                 
-                                VStack(spacing: 0.0){
-                                    Image(model.recipes[index].image)
-                                        .resizable()
-                                        .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
-                                        .clipped()
+                                self.isDetailViewShowing = true
+                                
+                            }, label: {
+                                
+                                ZStack {
+                                    Rectangle()
+                                        .foregroundColor(.white)
                                     
-                                    Text(model.recipes[index].name)
-                                        .font(.headline)
-                                        .padding(10)
+                                    VStack(spacing: 0.0){
+                                        Image(model.recipes[index].image)
+                                            .resizable()
+                                            .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fill/*@END_MENU_TOKEN@*/)
+                                            .clipped()
+                                        
+                                        Text(model.recipes[index].name)
+                                            .font(.headline)
+                                            .padding(10)
+                                    }
                                 }
+                                
+                            })
+                            .sheet(isPresented: $isDetailViewShowing) {
+                                RecipeDetailView(recipe: model.recipes[index])
                             }
+                            .buttonStyle(PlainButtonStyle())
                             .frame(width: (geo.size.width - 40), height: (geo.size.height - 100), alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             .cornerRadius(20)
                             .shadow(color: Color(.sRGB, red: 0, green: 0, blue: 0, opacity: 0.2), radius: 10, x: -5, y: 10)
+                            
+                            
+                            //MARK: Recipe Card
+                           
+                            
                             
                             
                         }
