@@ -10,50 +10,80 @@ import SwiftUI
 struct RecipeDetailView: View {
     
     var recipe:Recipe
+    @State var selectedServingSize = 2;
     
     var body: some View {
         
         ScrollView {
-        
-            VStack (alignment: .leading) {
+            
+            VStack {
                 
                 // MARK: Recipe Image
                 Image(recipe.image)
                     .resizable()
-                    .scaledToFill()
+                    .frame(width: 420, height: 250, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .scaledToFit()
+                    .clipped()
                 
-                // MARK: Ingredients
+                
                 VStack(alignment: .leading) {
-                    Text("Ingredients")
-                        .font(.headline)
-                        .padding([.bottom, .top], 5)
-                    
-                    ForEach (recipe.ingredients) { item in
-                        Text("• " + item.name)
-                    }
-                }
-                .padding(.horizontal)
-                
-                // MARK: Divider
-                Divider()
-                
-                // MARK: Directions
-                VStack(alignment: .leading) {
-                    Text("Directions")
-                        .font(.headline)
-                        .padding([.bottom, .top], 5)
-                    
-                    ForEach(0..<recipe.directions.count, id: \.self) { index in
+                    VStack(alignment: .leading) {
+                        Text(recipe
+                                .name)
+                            .font(.title)
+                            .bold()
                         
-                        Text(String(index+1) + ". " + recipe.directions[index])
-                            .padding(.bottom, 5)
+                        Text("Choose your serving size")
+                            .font(.caption)
+                        
+                        
+                        // MARK: Serving Size Picker
+                        Picker("", selection: $selectedServingSize) {
+                            Text("2").tag(2)
+                            Text("4").tag(4)
+                            Text("6").tag(6)
+                            Text("8").tag(8)
+                        } .pickerStyle(SegmentedPickerStyle())
+                        .frame(width: 160)
+                        
                     }
-                }
-                .padding(.horizontal)
+                    
+                    
+                    Divider()
+                    
+                    // MARK: Ingredients
+                    VStack(alignment: .leading) {
+                        Text("Ingredients")
+                            .font(.headline)
+                            .padding([.bottom, .top], 5)
+                        
+                        ForEach (recipe.ingredients) { item in
+                            Text("• " + RecipeModel.getPortion(ingredient: item, recipeServings: recipe.servings, targetServings: selectedServingSize) + " " + item.name)
+                        }
+                    }
+                    
+                    
+                    // MARK: Divider
+                    Divider()
+                    
+                    // MARK: Directions
+                    VStack(alignment: .leading) {
+                        Text("Directions")
+                            .font(.headline)
+                            .padding([.bottom, .top], 5)
+                        
+                        ForEach(0..<recipe.directions.count, id: \.self) { index in
+                            
+                            Text(String(index+1) + ". " + recipe.directions[index])
+                                .padding(.bottom, 5)
+                        }
+                    }
+                } .padding(.horizontal)
+                
             }
             
         }
-        .navigationBarTitle(recipe.name)
+        
     }
 }
 
