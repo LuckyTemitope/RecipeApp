@@ -21,8 +21,9 @@ struct RecipeDetailView: View {
                 // MARK: Recipe Image
                 Image(recipe.image)
                     .resizable()
-                    .frame(width: 420, height: 250, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .scaledToFit()
+                   // .frame(width: 420, height: 300, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .aspectRatio(contentMode: .fit)
+                    
                     .clipped()
                 
                 
@@ -30,7 +31,7 @@ struct RecipeDetailView: View {
                     VStack(alignment: .leading) {
                         Text(recipe
                                 .name)
-                            .font(.largeTitle)
+                            .font(Font.custom("Georgia Bold", size: 30))
                             .bold()
                             .padding(.top, 20)
                         
@@ -43,8 +44,9 @@ struct RecipeDetailView: View {
                             Text("2").tag(2)
                             Text("4").tag(4)
                             Text("6").tag(6)
-                            Text("8").tag(8)
-                        } .pickerStyle(SegmentedPickerStyle())
+                            Text("8").tag(8) 
+                        } .font(Font.custom("Georgia", size: 16))
+                        .pickerStyle(SegmentedPickerStyle())
                         .frame(width: 160)
                         
                     }
@@ -55,11 +57,12 @@ struct RecipeDetailView: View {
                     // MARK: Ingredients
                     VStack(alignment: .leading) {
                         Text("Ingredients")
-                            .font(.headline)
+                            .font(Font.custom("Georgia Bold", size: 16))
                             .padding([.bottom, .top], 5)
                         
                         ForEach (recipe.ingredients) { item in
                             Text("• " + RecipeModel.getPortion(ingredient: item, recipeServings: recipe.servings, targetServings: selectedServingSize) + " " + item.name)
+                                .font(Font.custom("Georgia", size: 16))
                         }
                     }
                     
@@ -71,13 +74,15 @@ struct RecipeDetailView: View {
                     // MARK: Directions
                     VStack(alignment: .leading) {
                         Text("Directions")
-                            .font(.headline)
+                            .font(Font.custom("Georgia Bold", size: 16))
                             .padding([.bottom, .top], 5)
                         
                         ForEach(0..<recipe.directions.count, id: \.self) { index in
                             
                             Text(String(index+1) + ". " + recipe.directions[index])
                                 .padding(.bottom, 5)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .font(Font.custom("Georgia", size: 16))
                         }
                     }
                 } .padding(.horizontal)
@@ -95,6 +100,6 @@ struct RecipeDetailView_Previews: PreviewProvider {
         // Create a dummy recipe and pass it into the detail view so that we can see a preview
         let model = RecipeModel()
         
-        RecipeDetailView(recipe: model.recipes[0])
+        RecipeDetailView(recipe: model.recipes[2])
     }
 }
